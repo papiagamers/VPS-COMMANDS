@@ -1,6 +1,22 @@
 #!/bin/bash
 
+clear
+
+# ===========================
+# PAPIA CLOUD ASCII LOGO
+# ===========================
+echo "██████╗  █████╗ ██████╗ ██╗ █████╗       ██████╗██╗      ██████╗ ██╗   ██╗██████╗"
+echo "██╔══██╗██╔══██╗██╔══██╗██║██╔══██╗     ██╔═══██╗██║     ██╔═══██╗██║   ██║██╔══██╗"
+echo "██████╔╝███████║██║  ██║██║███████║     █████╗ ██║     ██████╔╝██║   ██║██████╔╝"
+echo "██╔═══╝ ██╔══██║██║  ██║██║██╔══██║     ██╔══╝ ██║     ██╔═══╝ ██║   ██║██╔═══╝"
+echo "██║     ██║  ██║██████╔╝██║██║  ██║     ██║    ███████╗██║     ╚██████╔╝██║    "
+echo "╚═╝     ╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝  ╚═╝     ╚═╝    ╚══════╝╚═╝      ╚═════╝ ╚═╝    "
+echo
+echo "~~~~~~~~~~~~~    PAPIA CLOUD – Dragon • Power • Speed • Sky    ~~~~~~~~~~~~~"
+echo
+
 echo "=== PAPIA CLOUD | Pterodactyl Register Installer ==="
+echo
 
 cd /var/www/pterodactyl || { echo "Pterodactyl folder not found!"; exit 1; }
 
@@ -50,5 +66,8 @@ echo "=== Setting Permissions ==="
 sudo chown -R www-data:www-data /var/www/pterodactyl
 sudo chmod -R 755 /var/www/pterodactyl
 
-echo "=== PAPIA CLOUD Register Installed Successfully! ==="
-echo "Visit your panel and check /register page."
+echo
+echo "==============================================================="
+echo "     PAPIA CLOUD Register Installed Successfully!"
+echo "     Visit your panel and open:  /register"
+echo "==============================================================="
