@@ -3,7 +3,7 @@
 clear
 
 # ===========================
-# PAPIA CLOUD ASCII LOGO
+# PAPIA CLOUD Banner
 # ===========================
 echo "██████╗  █████╗ ██████╗ ██╗ █████╗       ██████╗██╗      ██████╗ ██╗   ██╗██████╗"
 echo "██╔══██╗██╔══██╗██╔══██╗██║██╔══██╗     ██╔═══██╗██║     ██╔═══██╗██║   ██║██╔══██╗"
@@ -11,63 +11,97 @@ echo "██████╔╝███████║██║  ██║██
 echo "██╔═══╝ ██╔══██║██║  ██║██║██╔══██║     ██╔══╝ ██║     ██╔═══╝ ██║   ██║██╔═══╝"
 echo "██║     ██║  ██║██████╔╝██║██║  ██║     ██║    ███████╗██║     ╚██████╔╝██║    "
 echo "╚═╝     ╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝  ╚═╝     ╚═╝    ╚══════╝╚═╝      ╚═════╝ ╚═╝    "
-echo
-echo "~~~~~~~~~~~~~    PAPIA CLOUD – Dragon • Power • Speed • Sky    ~~~~~~~~~~~~~"
-echo
-
-echo "=== PAPIA CLOUD | Pterodactyl Register Installer ==="
+echo "~~~~~~~~~~~~~    PAPIA CLOUD – Power • Speed • Sky    ~~~~~~~~~~~~~"
 echo
 
-cd /var/www/pterodactyl || { echo "Pterodactyl folder not found!"; exit 1; }
-
-echo "=== Updating system ==="
-sudo apt update -y
-
-echo "=== Installing PHP 8.4 + required extensions ==="
-sudo apt install -y php8.4 php8.4-cli php8.4-fpm php8.4-mysql php8.4-zip php8.4-xml php8.4-bcmath php8.4-curl php8.4-gd php8.4-mbstring php8.4-intl unzip curl
-
-echo "=== Installing Node 18 ==="
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt install -y nodejs
-
-echo "=== Checking versions ==="
-node -v
-npm -v
-
-echo "=== Installing Composer if missing ==="
-composer -V || (
-  curl -sS https://getcomposer.org/installer -o composer-setup.php
-  sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-)
-
-echo "=== Installing Pterodactyl Register Addon ==="
-composer require wemx/pterodactylregister
-
-echo "=== Clearing Laravel Cache ==="
-php artisan cache:clear
-php artisan config:clear
-php artisan route:clear
-php artisan view:clear
-
-echo "=== Running Register Installer ==="
-php artisan register:install
-
-echo "=== Installing NPM dependencies ==="
-npm install --legacy-peer-deps
-
-echo "=== Building Pterodactyl frontend ==="
-npm run build:production
-
-echo "=== Restarting services ==="
-sudo systemctl restart nginx
-sudo systemctl restart php8.4-fpm
-
-echo "=== Setting Permissions ==="
-sudo chown -R www-data:www-data /var/www/pterodactyl
-sudo chmod -R 755 /var/www/pterodactyl
-
+# ===========================
+# Menu
+# ===========================
+echo "Please choose an option:"
+echo "1) Install Register Addon"
+echo "2) Install Login Addon"
+echo "3) Exit"
 echo
-echo "==============================================================="
-echo "     PAPIA CLOUD Register Installed Successfully!"
-echo "     Visit your panel and open:  /register"
-echo "==============================================================="
+read -p "Enter your choice [1-3]: " choice
+
+case $choice in
+    1)
+        echo "=== Installing Register Addon ==="
+        cd /var/www/pterodactyl || { echo "Pterodactyl folder not found!"; exit 1; }
+
+        sudo apt update -y
+        sudo apt install -y php8.4 php8.4-cli php8.4-fpm php8.4-mysql php8.4-zip php8.4-xml php8.4-bcmath php8.4-curl php8.4-gd php8.4-mbstring php8.4-intl unzip curl
+
+        curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+        sudo apt install -y nodejs
+
+        composer -V || (
+          curl -sS https://getcomposer.org/installer -o composer-setup.php
+          sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+        )
+
+        composer require wemx/pterodactylregister
+
+        php artisan cache:clear
+        php artisan config:clear
+        php artisan route:clear
+        php artisan view:clear
+
+        php artisan register:install
+
+        npm install --legacy-peer-deps
+        npm run build:production
+
+        sudo systemctl restart nginx
+        sudo systemctl restart php8.4-fpm
+
+        sudo chown -R www-data:www-data /var/www/pterodactyl
+        sudo chmod -R 755 /var/www/pterodactyl
+
+        echo "=== Register Addon Installed Successfully! ==="
+        ;;
+    2)
+        echo "=== Installing Login Addon ==="
+        cd /var/www/pterodactyl || { echo "Pterodactyl folder not found!"; exit 1; }
+
+        sudo apt update -y
+        sudo apt install -y php8.4 php8.4-cli php8.4-fpm php8.4-mysql php8.4-zip php8.4-xml php8.4-bcmath php8.4-curl php8.4-gd php8.4-mbstring php8.4-intl unzip curl
+
+        curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+        sudo apt install -y nodejs
+
+        composer -V || (
+          curl -sS https://getcomposer.org/installer -o composer-setup.php
+          sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+        )
+
+        # Replace below with the actual login addon package name
+        composer require wemx/pterodactyllogin
+
+        php artisan cache:clear
+        php artisan config:clear
+        php artisan route:clear
+        php artisan view:clear
+
+        php artisan login:install  # Replace with actual login install command
+
+        npm install --legacy-peer-deps
+        npm run build:production
+
+        sudo systemctl restart nginx
+        sudo systemctl restart php8.4-fpm
+
+        sudo chown -R www-data:www-data /var/www/pterodactyl
+        sudo chmod -R 755 /var/www/pterodactyl
+
+        echo "=== Login Addon Installed Successfully! ==="
+        ;;
+    3)
+        echo "Exiting installer. Goodbye!"
+        exit 0
+        ;;
+    *)
+        echo "Invalid choice! Exiting."
+        exit 1
+        ;;
+esac
